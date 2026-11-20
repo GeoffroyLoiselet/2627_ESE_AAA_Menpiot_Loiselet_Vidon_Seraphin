@@ -5,7 +5,7 @@
  * This file contains the implementation of the shell module, which provides a command-line interface.
  */
 
-#include "user_interface/shell.h"
+#include "shell.h"
 
 h_shell_t hshell1;
 
