@@ -33,7 +33,7 @@ HAL_StatusTypeDef encoderInit(h_encoder_t *encoder, TIM_HandleTypeDef* htim, flo
     encoder->previous_count = 32768;
     encoder->velocity = 0.0f;
 
-	shellAdd(&hshell1, "getSpeed", encoderGetSpeed, "Get instant speed");
+	shellAdd(&hshell1, "getSpeed", encoderShellGetSpeed, "Get instant speed");
 
     /* Démarrage du timer en mode encodeur */
     __HAL_TIM_SET_COUNTER(encoder->htim, encoder->previous_count);

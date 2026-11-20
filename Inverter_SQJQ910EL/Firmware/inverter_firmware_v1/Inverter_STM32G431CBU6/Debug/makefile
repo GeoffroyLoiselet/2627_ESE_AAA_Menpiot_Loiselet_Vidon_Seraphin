@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (13.3.rel1)
+# Toolchain: GNU Tools for STM32 (14.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -63,8 +63,8 @@ all: main-build
 main-build: Inverter_STM32G431CBU6.elf secondary-outputs
 
 # Tool invocations
-Inverter_STM32G431CBU6.elf Inverter_STM32G431CBU6.map: $(OBJS) $(USER_OBJS) /home/nicolas/git/Inverter_SQJQ910EL/Firmware/inverter_firmware_v1/Inverter_STM32G431CBU6/STM32G431CBUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Inverter_STM32G431CBU6.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/nicolas/git/Inverter_SQJQ910EL/Firmware/inverter_firmware_v1/Inverter_STM32G431CBU6/STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Inverter_STM32G431CBU6.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Inverter_STM32G431CBU6.elf Inverter_STM32G431CBU6.map: $(OBJS) $(USER_OBJS) C:\Users\gjvid\Documents\GitHub\2627_ESE_AAA_Menpiot_Loiselet_Vidon_Seraphin\Inverter_SQJQ910EL\Firmware\inverter_firmware_v1\Inverter_STM32G431CBU6\STM32G431CBUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Inverter_STM32G431CBU6.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\gjvid\Documents\GitHub\2627_ESE_AAA_Menpiot_Loiselet_Vidon_Seraphin\Inverter_SQJQ910EL\Firmware\inverter_firmware_v1\Inverter_STM32G431CBU6\STM32G431CBUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Inverter_STM32G431CBU6.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

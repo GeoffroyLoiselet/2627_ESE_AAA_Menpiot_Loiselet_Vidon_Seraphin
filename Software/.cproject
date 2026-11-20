@@ -163,14 +163,14 @@
 		<project id="Inverter_STM32G431CBU6.null.981740715" name="Inverter_STM32G431CBU6"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.2132876913;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.2132876913.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1290325144;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.305033642">
+		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.1283857937;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.1283857937.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1203918360;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.90901130">
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.697520773;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.697520773.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1089863755;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.745359580">
+		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1678121218;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.release.1678121218.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.634616953;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1506994642">
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
