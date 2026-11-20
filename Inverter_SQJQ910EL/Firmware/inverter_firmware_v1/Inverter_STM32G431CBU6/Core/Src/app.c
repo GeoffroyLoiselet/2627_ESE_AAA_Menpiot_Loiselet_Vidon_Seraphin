@@ -25,6 +25,7 @@ static StateInput_t state_input;
 
 void init_device(void){
 
+
 	state_input = INIT_START;
 
 	// FSM Init

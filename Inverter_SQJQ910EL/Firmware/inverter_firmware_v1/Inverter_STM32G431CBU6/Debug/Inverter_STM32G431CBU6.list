@@ -2263,6 +2263,7 @@ void init_device(void){
  800168c:	b580      	push	{r7, lr}
  800168e:	af00      	add	r7, sp, #0
 
+
 	state_input = INIT_START;
  8001690:	4b62      	ldr	r3, [pc, #392]	@ (800181c <init_device+0x190>)
  8001692:	2200      	movs	r2, #0
