@@ -112,4 +112,3 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-
