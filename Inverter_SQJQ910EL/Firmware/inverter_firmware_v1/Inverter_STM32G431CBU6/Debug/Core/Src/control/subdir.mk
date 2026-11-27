@@ -6,14 +6,17 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Core/Src/control/control.c \
+../Core/Src/control/courant.c \
 ../Core/Src/control/motor.c 
 
 OBJS += \
 ./Core/Src/control/control.o \
+./Core/Src/control/courant.o \
 ./Core/Src/control/motor.o 
 
 C_DEPS += \
 ./Core/Src/control/control.d \
+./Core/Src/control/courant.d \
 ./Core/Src/control/motor.d 
 
 
@@ -24,7 +27,7 @@ Core/Src/control/%.o Core/Src/control/%.su Core/Src/control/%.cyclo: ../Core/Src
 clean: clean-Core-2f-Src-2f-control
 
 clean-Core-2f-Src-2f-control:
-	-$(RM) ./Core/Src/control/control.cyclo ./Core/Src/control/control.d ./Core/Src/control/control.o ./Core/Src/control/control.su ./Core/Src/control/motor.cyclo ./Core/Src/control/motor.d ./Core/Src/control/motor.o ./Core/Src/control/motor.su
+	-$(RM) ./Core/Src/control/control.cyclo ./Core/Src/control/control.d ./Core/Src/control/control.o ./Core/Src/control/control.su ./Core/Src/control/courant.cyclo ./Core/Src/control/courant.d ./Core/Src/control/courant.o ./Core/Src/control/courant.su ./Core/Src/control/motor.cyclo ./Core/Src/control/motor.d ./Core/Src/control/motor.o ./Core/Src/control/motor.su
 
 .PHONY: clean-Core-2f-Src-2f-control
 

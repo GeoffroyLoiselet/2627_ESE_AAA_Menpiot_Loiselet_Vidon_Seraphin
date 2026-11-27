@@ -32,5 +32,6 @@ extern h_analoginput_t h_analogInput1;
 
 HAL_StatusTypeDef analogInputInit(h_analoginput_t *analogInput, ADC_HandleTypeDef* hadc, int nb_channels);
 HAL_StatusTypeDef analogInputPrint(h_analoginput_t *analogInput);
+HAL_StatusTypeDef analogInputUpdate(h_analoginput_t *analogInput);
 
 #endif /* INC_ACQUISITION_ANALOG_H_ */

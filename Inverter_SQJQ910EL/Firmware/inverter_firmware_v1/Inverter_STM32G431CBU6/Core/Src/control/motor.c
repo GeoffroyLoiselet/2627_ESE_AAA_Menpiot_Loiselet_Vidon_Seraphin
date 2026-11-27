@@ -62,6 +62,23 @@ HAL_StatusTypeDef motorSetDutyCycle(h_motor_t *motor, float duty){
 	return HAL_OK;
 }
 
+HAL_StatusTypeDef motorSetDutyImmediate(h_motor_t *motor, float duty){
+	uint32_t ARR = __HAL_TIM_GET_AUTORELOAD(motor->htim);
+	if(duty > 1) duty = 1;
+	if(duty < 0) duty = 0;
+	motor->duty = duty;
+
+	uint32_t ccr = (uint32_t)(duty * ARR);
+	if(ccr > ARR-10) ccr = ARR-10;
+	if(ccr < 10)     ccr = 10;
+	motor->ccr = ccr;
+	motor->ccr_target = ccr;
+
+	__HAL_TIM_SET_COMPARE(motor->htim, TIM_CHANNEL_1, ccr);
+	__HAL_TIM_SET_COMPARE(motor->htim, TIM_CHANNEL_2, ARR - ccr);
+	return HAL_OK;
+}
+
 /* Application PWM */
 HAL_StatusTypeDef motorUpdate(h_motor_t *motor){
 

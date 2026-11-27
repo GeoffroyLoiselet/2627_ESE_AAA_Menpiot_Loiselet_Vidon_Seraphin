@@ -1,16 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "acquisition/analog.h"
 #include "user_interface/shell.h"
 #include "control/motor.h"
+#include "control/courant.h"
 #include "adc.h"
 #include "main.h"
 #include "tim.h"
 
-#define DIV_FREQ 400;
 h_analoginput_t h_analogInput1;
-uint32_t idx_div = 0;
-float I_u = 0;
 
 HAL_StatusTypeDef analogInputInit(h_analoginput_t *analogInput, ADC_HandleTypeDef* hadc, int nb_channels){
 	analogInput->hadc = hadc;
@@ -19,31 +18,34 @@ HAL_StatusTypeDef analogInputInit(h_analoginput_t *analogInput, ADC_HandleTypeDe
     return HAL_OK;
 }
 
-HAL_StatusTypeDef analogInputPrint(h_analoginput_t *analogInput)
+/* Raw ADC -> physical values (V or A), cheap enough to run at 40 kHz */
+HAL_StatusTypeDef analogInputUpdate(h_analoginput_t *analogInput)
 {
 	for(int idx = 0; idx < analogInput->nb_channels; idx++){
-		analogInput->values[idx] = (((float)analogInput->raw_values[idx]*3.3/4096.0)-analogInput->offset[idx])*analogInput->gain[idx];
-//		printf("%4d, %2.3f %c \t", analogInput->raw_values[idx], analogInput->values[idx], analogInput->unit[idx]);
-
+		analogInput->values[idx] = (((float)analogInput->raw_values[idx]*3.3f/4096.0f)-analogInput->offset[idx])*analogInput->gain[idx];
 	}
-//	printf("U_u:%.3f,",analogInput->values[0]);
-//	printf("U_v:%.3f,",analogInput->values[1]);
-//	printf("I_u:%.3f,",analogInput->values[3]);
-//	printf("I_v:%.3f",analogInput->values[4]);
-//	printf("\r\n");
     return HAL_OK;
 }
 
+HAL_StatusTypeDef analogInputPrint(h_analoginput_t *analogInput)
+{
+	return analogInputUpdate(analogInput);
+}
+
+/* Called at the end of each 6-channel scan, i.e. at 40 kHz (TIM1 TRGO).
+ * No printf / blocking call allowed here. */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc){
-	I_u = h_analogInput1.values[3];
-	if(I_u < 0) I_u = -I_u;
-	if(I_u > 10) printf("Warning !\r\n");
-	if(I_u > 20){
-		printf("Error !\r");
-		motorStop(&h_motor1);
+	if(hadc->Instance != ADC2) return;
+
+	analogInputUpdate(&h_analogInput1);
+
+	float i_u = h_analogInput1.values[CURRENT_ADC_INDEX];
+
+	/* Absolute protection, active whatever the control mode */
+	if(fabsf(i_u) > CURRENT_HARD_LIMIT_A){
+		currentTrip(&h_current1);
+		return;
 	}
-	idx_div = (idx_div+1)%DIV_FREQ;
-	if(idx_div==0) {
-		analogInputPrint(&h_analogInput1);
-	}
+
+	currentUpdate(&h_current1, i_u);
 }

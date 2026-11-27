@@ -17,6 +17,7 @@
 #include "acquisition/encoder.h"
 #include "control/motor.h"
 #include "control/control.h"
+#include "control/courant.h"
 
 static char shell_uart3_received_char;
 
@@ -57,39 +58,39 @@ void init_device(void){
 	buttonInit(h_buttons1);
 
 	// INIT INPUT
-    h_analogInput1.gain[0] = 10.9; //19
-    h_analogInput1.offset[0] = 0;
-    h_analogInput1.unit[0] = 'V';
-    h_analogInput1.channel[0] = 'U';
+	h_analogInput1.gain[0] = 10.9; //19
+	h_analogInput1.offset[0] = 0;
+	h_analogInput1.unit[0] = 'V';
+	h_analogInput1.channel[0] = 'U';
 
-    h_analogInput1.gain[1] = 10.9; //19
-    h_analogInput1.offset[1] = 0;
-    h_analogInput1.unit[1] = 'V';
-    h_analogInput1.channel[1] = 'V';
+	h_analogInput1.gain[1] = 10.9; //19
+	h_analogInput1.offset[1] = 0;
+	h_analogInput1.unit[1] = 'V';
+	h_analogInput1.channel[1] = 'V';
 
-    h_analogInput1.gain[2] = 10.9; //19
-    h_analogInput1.offset[2] = 0;
-    h_analogInput1.unit[2] = 'V';
-    h_analogInput1.channel[2] = 'W';
+	h_analogInput1.gain[2] = 10.9; //19
+	h_analogInput1.offset[2] = 0;
+	h_analogInput1.unit[2] = 'V';
+	h_analogInput1.channel[2] = 'W';
 
-    // 50mV/A
-    // Offset : 2.46V
-    h_analogInput1.gain[3] = 20;
-    h_analogInput1.offset[3] = 2.483;
-    h_analogInput1.unit[3] = 'I';
-    h_analogInput1.channel[3] = 'U';
+	// 50mV/A
+	// Offset : 2.46V
+	h_analogInput1.gain[3] = 20;
+	h_analogInput1.offset[3] = 2.483;
+	h_analogInput1.unit[3] = 'I';
+	h_analogInput1.channel[3] = 'U';
 
-    h_analogInput1.gain[4] = 20;
-    h_analogInput1.offset[4] = 2.483;
-    h_analogInput1.unit[4] = 'I';
-    h_analogInput1.channel[4] = 'V';
+	h_analogInput1.gain[4] = 20;
+	h_analogInput1.offset[4] = 2.483;
+	h_analogInput1.unit[4] = 'I';
+	h_analogInput1.channel[4] = 'V';
 
-    h_analogInput1.gain[5] = 20;
-    h_analogInput1.offset[5] = 2.483;
-    h_analogInput1.unit[5] = 'I';
-    h_analogInput1.channel[5] = 'W';
+	h_analogInput1.gain[5] = 20;
+	h_analogInput1.offset[5] = 2.483;
+	h_analogInput1.unit[5] = 'I';
+	h_analogInput1.channel[5] = 'W';
 
-    analogInputInit(&h_analogInput1, &hadc2, 6);
+	analogInputInit(&h_analogInput1, &hadc2, 6);
 
 	// INIT ENCODER
 	encoderInit(&h_encoder1, &htim8, -2.9296875, 0.01); // -1*(60*100)/(1024*2), -1 : inv A et B, 60 sec / min, 100Hz, 1024 tic / turn, 2 count / tic, 0.01 ms
@@ -99,6 +100,9 @@ void init_device(void){
 
 	// CONTROL INIT
 	controlInit(&h_control1, &h_motor1, &h_encoder1, 0, 0, 0, 0, 0);
+
+	// CURRENT INIT: sign, Kp, Ki, u_max, limit (A). Gains at 0 = no action until you set them
+	currentInit(&h_current1, &h_motor1, 1.0f, 0.0f, 0.0f, 0.9f, 2.0f);
 
 	// TICK INIT
 	HAL_TIM_Base_Start_IT(&htim4);
@@ -134,7 +138,12 @@ void loop(){
 	encoderUpdate(&h_encoder1);
 	FSM_Update(&h_control1);
 	controlUpdate(&h_control1);
-	controlUpdateMotorSpeed(&h_control1);
+	if(!currentIsEnabled(&h_current1)) controlUpdateMotorSpeed(&h_control1);
+
+	if(h_current1.fault){
+		h_current1.fault = 0;
+		printf("Overcurrent trip, loop disabled\r\n");
+	}
 
 	// Every 100 ms
 	if(loop_number%10 == 0){

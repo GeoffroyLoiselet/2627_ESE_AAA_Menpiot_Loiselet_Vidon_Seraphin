@@ -41,6 +41,7 @@ HAL_StatusTypeDef motorInit(h_motor_t *motor,
 		float k, float vmax, float speed_max);
 HAL_StatusTypeDef motorSetSpeed(h_motor_t *motor, float rpm);
 HAL_StatusTypeDef motorSetDutyCycle(h_motor_t *motor, float duty);
+HAL_StatusTypeDef motorSetDutyImmediate(h_motor_t *motor, float duty);
 HAL_StatusTypeDef motorUpdate(h_motor_t *motor);
 HAL_StatusTypeDef motorStart(h_motor_t *motor);
 HAL_StatusTypeDef motorStop(h_motor_t *motor);
