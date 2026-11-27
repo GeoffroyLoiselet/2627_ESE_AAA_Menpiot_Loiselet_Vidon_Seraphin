@@ -47,6 +47,7 @@ HAL_StatusTypeDef motorStop(h_motor_t *motor);
 HAL_StatusTypeDef motorPrint(h_motor_t *motor);
 int motorShellSetDuty(h_shell_t* h_shell, int argc, char** argv);
 int motorShellSetRPM(h_shell_t* h_shell, int argc, char** argv);
+int motorShellSetCCR(h_shell_t* h_shell, int argc, char** argv);
 int motorShellStart(h_shell_t* h_shell, int argc, char** argv);
 int motorShellStop(h_shell_t* h_shell, int argc, char** argv);
 #endif /* INC_CONTROL_MOTOR_H_ */
