@@ -20,6 +20,7 @@ Le but de ce TP est de, a partir d'un hacheur complet et d'une carte Nucleo-STM3
 Pour ce TP nous aurons la carte ``Inverter_SQJQ910EL`` fournie par le professeur.  
 
 <img src="./media/pcb.png" width="500">
+
 *<div align="center"> Photo PCB </div>*
 
 Le lien vers le GitHub complet du PCB est [ici](https://github.com/DBXYD/Inverter_SQJQ910EL.git)
@@ -40,6 +41,7 @@ Le PCB possède une broche à 20 pins afin de visualiser les informations suivan
 Ainsi qu'un connecteur pour l'encodeur.
 
 <img src="./media/Moteur.jpeg" width="500">
+
 *<div align="center"> Photo Moteur </div>*
 
 
