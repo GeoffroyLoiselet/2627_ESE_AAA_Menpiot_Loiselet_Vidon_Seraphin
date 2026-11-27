@@ -138,6 +138,7 @@ void loop(){
 	encoderUpdate(&h_encoder1);
 	FSM_Update(&h_control1);
 	controlUpdate(&h_control1);
+	//currentUpdate(&h_current1,);
 	if(!currentIsEnabled(&h_current1)) controlUpdateMotorSpeed(&h_control1);
 
 	if(h_current1.fault){

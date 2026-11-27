@@ -2609,6 +2609,7 @@ void loop(){
 	controlUpdate(&h_control1);
  80018c2:	480f      	ldr	r0, [pc, #60]	@ (8001900 <loop+0x58>)
  80018c4:	f001 fa2e 	bl	8002d24 <controlUpdate>
+	//currentUpdate(&h_current1,);
 	if(!currentIsEnabled(&h_current1)) controlUpdateMotorSpeed(&h_control1);
  80018c8:	480e      	ldr	r0, [pc, #56]	@ (8001904 <loop+0x5c>)
  80018ca:	f7ff fe8b 	bl	80015e4 <currentIsEnabled>
