@@ -49,4 +49,5 @@ int motorShellSetDuty(h_shell_t* h_shell, int argc, char** argv);
 int motorShellSetRPM(h_shell_t* h_shell, int argc, char** argv);
 int motorShellStart(h_shell_t* h_shell, int argc, char** argv);
 int motorShellStop(h_shell_t* h_shell, int argc, char** argv);
+int motorShellSetCCR(h_shell_t* h_shell, int argc, char** argv);
 #endif /* INC_CONTROL_MOTOR_H_ */
