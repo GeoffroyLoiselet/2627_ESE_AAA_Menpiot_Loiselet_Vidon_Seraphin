@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "control/motor.h"
+#include "control/control.h"
 #include "main.h"
 #include "tim.h"
 
@@ -26,10 +27,11 @@ HAL_StatusTypeDef motorInit(h_motor_t *motor,
 
 	motor->started = 0;
 
-	//	shellAdd(&hshell1, "setMotorDuty", motorShellSetDuty, "Set instant duty cycle");
-	//	shellAdd(&hshell1, "setMotorRPM", motorShellSetRPM, "Set instant RPM Target");
-	//	shellAdd(&hshell1, "setMotorStart", motorShellStart, "Start PWM");
-	//	shellAdd(&hshell1, "setMotorStop", motorShellStop, "Stop PWM");
+		shellAdd(&hshell1, "setMotorDuty", motorShellSetDuty, "Set instant duty cycle");
+		shellAdd(&hshell1, "setMotorRPM", motorShellSetRPM, "Set instant RPM Target");
+		shellAdd(&hshell1, "setMotorStart", motorShellStart, "Start PWM");
+		shellAdd(&hshell1, "setMotorStop", motorShellStop, "Stop PWM");
+		shellAdd(&hshell1, "SET_CCR", motorShellSetCCR, "Set CCR");
 
 	return HAL_OK;
 }
@@ -146,6 +148,31 @@ int motorShellSetRPM(h_shell_t* h_shell, int argc, char** argv){
 	if(rpm < -h_motor1.speed_max || 1 > h_motor1.speed_max) return 1;
 
 	motorSetSpeed(&h_motor1, rpm);
+
+	return 0;
+}
+
+int motorShellSetCCR(h_shell_t* h_shell, int argc, char** argv){
+	if(argc != 2) return 1;
+	int ccr = atoi(argv[1]);
+
+	uint32_t ARR = __HAL_TIM_GET_AUTORELOAD(h_motor1.htim);
+	int ccr_max = ARR - 10;
+	int ccr_min = 10;
+
+	if(ccr > ccr_max){
+		ccr = ccr_max;
+	}
+
+	else if(ccr < ccr_min){
+		ccr = ccr_min;
+	}
+
+	float duty = (float)ccr/(float)ARR;
+
+	h_control1.loop_status = LOOP_OPENED;
+	h_control1.pwm_status = PWM_ENABLED;
+	h_control1.target = (2 * duty - 1) * h_motor1.speed_max;
 
 	return 0;
 }
